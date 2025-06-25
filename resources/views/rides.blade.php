@@ -526,7 +526,7 @@
         <div class="container-fluid">
             <!-- Header Section -->
             <div class="text-center mb-5 fadeInUp">
-                <h1 class="main-title">Find Your Perfect Ride</h1>
+                <h1 class="main-title">Find Your Perfect Ridess</h1>
                 <p class="subtitle">Discover comfortable and affordable rides to your destination</p>
             </div>
 
