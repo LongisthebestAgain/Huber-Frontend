@@ -244,8 +244,9 @@
 
         .back-button {
             position: absolute;
-            top: 2rem;
-            left: 2rem;
+            top: 110px;
+            left: 20px;
+            right: auto;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             border: none;

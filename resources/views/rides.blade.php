@@ -516,6 +516,38 @@
                 transform: rotate(360deg);
             }
         }
+
+        .back-button {
+            position: absolute;
+            top: 110px;
+            left: 20px;
+            right: auto;
+            z-index: 10;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 0.7rem 1rem;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            border: none;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 16px rgba(76, 132, 255, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                top: 80px;
+                left: 10px;
+                right: auto;
+                padding: 0.5rem 0.8rem;
+                font-size: 1.1rem;
+            }
+        }
     </style>
 @endsection
 @section('content')
@@ -526,7 +558,7 @@
         <div class="container-fluid">
             <!-- Header Section -->
             <div class="text-center mb-5 fadeInUp">
-                <h1 class="main-title">Find Your Perfect Ridess</h1>
+                <h1 class="main-title">Find Your Perfect Ride</h1>
                 <p class="subtitle">Discover comfortable and affordable rides to your destination</p>
             </div>
 
