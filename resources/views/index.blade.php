@@ -1,4 +1,7 @@
-@extends('layouts.app') @section('Huber', 'Home Page') @section('content')
+@extends('layouts.app')
+@section('title', 'Huber - Home Page')
+
+@section('content')
 <header id="home" class="hero">
     <div class="container h-100">
         <div class="row h-100 align-items-center">

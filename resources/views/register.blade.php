@@ -1,16 +1,14 @@
-@extends('layouts.app') @section('Register Huber', 'Register Page')
+@extends('layouts.app')
+@section('title', 'Register Huber - Register Page')
 @section('style')
-
-@endsection
-
     <style>
         .register-container {
             min-height: 100vh;
             background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            padding: 2rem;
+            padding: 4rem 2rem 2rem 2rem; /* Increase top padding */
         }
 
         .register-card {
@@ -345,7 +343,7 @@
             </div>
 
             <div class="text-center mt-3">
-                <p class="mb-0">Already have an account? <a href="login.html" class="text-primary">Sign In</a></p>
+                <p class="mb-0">Already have an account? <a href="login" class="text-primary">Sign In</a></p>
             </div>
         </div>
     </div>
@@ -570,12 +568,12 @@
                 if (selectedRole === 'driver') {
                     showAlert('Registration submitted! Your account will be activated after document verification.', 'success');
                     setTimeout(() => {
-                        window.location.href = 'login.html';
+                        window.location.href = '/login';
                     }, 3000);
                 } else {
                     showAlert('Registration successful! You can now log in.', 'success');
                     setTimeout(() => {
-                        window.location.href = 'login.html';
+                        window.location.href = '/login';
                     }, 2000);
                 }
 
