@@ -516,38 +516,6 @@
                 transform: rotate(360deg);
             }
         }
-
-        .back-button {
-            position: absolute;
-            top: 110px;
-            left: 20px;
-            right: auto;
-            z-index: 10;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            padding: 0.7rem 1rem;
-            font-size: 1.3rem;
-            color: var(--primary-color);
-            border: none;
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-
-        .back-button:hover {
-            background: var(--primary-color);
-            color: white;
-            box-shadow: 0 4px 16px rgba(76, 132, 255, 0.15);
-        }
-
-        @media (max-width: 768px) {
-            .back-button {
-                top: 80px;
-                left: 10px;
-                right: auto;
-                padding: 0.5rem 0.8rem;
-                font-size: 1.1rem;
-            }
-        }
     </style>
 @endsection
 @section('content')
@@ -897,7 +865,7 @@
                 <div class="ride-card fadeInUp" style="animation-delay: ${index * 0.1}s">
                     <img src="${ride.routeImage}" alt="Route" class="route-image">
                     <div class="driver-info">
-                        <a href="{{ route('driver.profile') }}" class="driver-info">
+                        <a href="driver-profile.html" class="driver-info">
                             <img src="${ride.driverImage}" alt="${ride.driver}" class="driver-avatar">
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-start">

@@ -54,7 +54,6 @@
                 color: gray;
                 font-weight: 700;
                 font-size: 2.5rem;
-                margin-top: 2.5rem;
                 margin-bottom: 0.5rem;
                 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
                 text-align: center;
@@ -215,9 +214,8 @@
 
             .back-button {
                 position: absolute;
-                top: 110px;
-                left: 20px;
-                right: auto;
+                top: 2rem;
+                left: 2rem;
                 background: rgba(255, 255, 255, 0.9);
                 backdrop-filter: blur(10px);
                 border: none;

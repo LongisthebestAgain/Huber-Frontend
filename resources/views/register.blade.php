@@ -1,5 +1,8 @@
 @extends('layouts.app') @section('Register Huber', 'Register Page')
 @section('style')
+
+@endsection
+
     <style>
         .register-container {
             min-height: 100vh;
