@@ -516,6 +516,49 @@
                 transform: rotate(360deg);
             }
         }
+
+        .back-button {
+            position: absolute;
+            top: 80px; 
+            left: 30px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-color), #5a6fd8);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 16px rgba(76, 132, 255, 0.18);
+            font-size: 1.5rem;
+            transition: box-shadow 0.2s, background 0.2s, transform 0.2s;
+            cursor: pointer;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #5a6fd8, var(--primary-color));
+            box-shadow: 0 8px 32px rgba(76, 132, 255, 0.28);
+            transform: translateY(-2px) scale(1.05);
+            color: #fff;
+        }
+
+        .back-button i {
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .back-button {
+                top: 60px; /* Also move down on mobile */
+                left: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
     </style>
 @endsection
 @section('content')

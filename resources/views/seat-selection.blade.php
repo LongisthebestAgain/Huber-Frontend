@@ -495,7 +495,7 @@
                 const rideData = sessionStorage.getItem("selectedRide");
                 if (!rideData) {
                     alert("No ride selected. Redirecting back to rides page.");
-                    window.location.href = "rides.html";
+                    window.location.href = "rides";
                     return;
                 }
 
