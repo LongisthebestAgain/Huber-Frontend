@@ -172,7 +172,7 @@
 
         .back-button {
             position: absolute;
-            top: 2rem;
+            top: 80px; /* Move down to clear navbar */
             left: 2rem;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);

@@ -8,9 +8,9 @@
                     var(--primary-color),
                     var(--dark-color));
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            padding: 2rem;
+            padding: 4rem 2rem 2rem 2rem; /* Increased top padding */
         }
 
         .login-card {
