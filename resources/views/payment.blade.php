@@ -463,11 +463,11 @@
         }
 
         function goToDashboard() {
-            window.location.href = 'passenger-dashboard';
+            window.location.href = "{{ route('home') }}";
         }
 
         function viewBooking() {
-            window.location.href = 'booking-history';
+            window.location.href = "{{ route('user.bookings') }}";
         }
     </script>
 
