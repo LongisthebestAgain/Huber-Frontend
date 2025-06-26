@@ -907,24 +907,22 @@
             resultsContainer.innerHTML = rides.map((ride, index) => `
                 <div class="ride-card fadeInUp" style="animation-delay: ${index * 0.1}s">
                     <img src="${ride.routeImage}" alt="Route" class="route-image">
-                    <div class="driver-info">
-                        <a href="driver-profile.html" class="driver-info">
-                            <img src="${ride.driverImage}" alt="${ride.driver}" class="driver-avatar">
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <div>
-                                        <h5 class="mb-1">${ride.driver}</h5>
-                                        <div class="rating-stars">
-                                            ${"★".repeat(Math.floor(ride.rating))}${ride.rating % 1 ? "☆" : ""}
-                                            <small class="text-muted">(${ride.rating})</small>
-                                        </div>
+                    <div class="driver-info" onclick="goToDriverProfile(${ride.id})" style="cursor:pointer;">
+                        <img src="${ride.driverImage}" alt="${ride.driver}" class="driver-avatar">
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h5 class="mb-1">${ride.driver}</h5>
+                                    <div class="rating-stars">
+                                        ${"★".repeat(Math.floor(ride.rating))}${ride.rating % 1 ? "☆" : ""}
+                                        <small class="text-muted">(${ride.rating})</small>
                                     </div>
-                                    <span class="ride-type-badge ${ride.type}">
-                                        ${ride.type === 'shared' ? '👥 Shared' : '👑 Exclusive'}
-                                    </span>
                                 </div>
+                                <span class="ride-type-badge ${ride.type}">
+                                    ${ride.type === 'shared' ? '👥 Shared' : '👑 Exclusive'}
+                                </span>
                             </div>
-                        </a>
+                        </div>
                     </div>
                     <div class="route-info">
                         <div class="route-point">
@@ -1003,6 +1001,13 @@
                     window.location.href = "{{ route('seat.selection') }}";
                 }
             }, 1000);
+        }
+
+        function goToDriverProfile(rideId) {
+            // Optionally, store ride/driver info for the profile page
+            const ride = allRides.find(r => r.id === rideId);
+            sessionStorage.setItem('selectedDriver', JSON.stringify(ride));
+            window.location.href = "{{ route('driver.profile') }}";
         }
     </script>
 @endsection
