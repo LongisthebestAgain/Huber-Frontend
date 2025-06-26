@@ -897,7 +897,7 @@
                 <div class="ride-card fadeInUp" style="animation-delay: ${index * 0.1}s">
                     <img src="${ride.routeImage}" alt="Route" class="route-image">
                     <div class="driver-info">
-                        <a href="driver-profile.html" class="driver-info">
+                        <a href="{{ route('driver.profile') }}" class="driver-info">
                             <img src="${ride.driverImage}" alt="${ride.driver}" class="driver-avatar">
                             <div class="flex-grow-1">
                                 <div class="d-flex justify-content-between align-items-start">

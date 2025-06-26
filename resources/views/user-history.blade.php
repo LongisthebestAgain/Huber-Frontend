@@ -543,7 +543,7 @@
             alert(
                 "🔄 Redirecting to find similar rides with the same route...",
             );
-            window.location.href = "rides.html";
+            window.location.href = "rides";
         }
 
         function loadMoreHistory() {

@@ -38,6 +38,31 @@
             font-weight: bold;
             color: var(--primary-color);
         }
+
+        .back-button {
+            position: absolute;
+            top: 110px;
+            left: 20px;
+            right: auto;
+            z-index: 10;
+            background: linear-gradient(135deg, var(--primary-color), #5a6fd8);
+            color: white;
+            border-radius: 50%;
+            box-shadow: 0 4px 16px rgba(76, 132, 255, 0.15);
+            padding: 0.8rem 1.2rem;
+            font-size: 1.4rem;
+            border: none;
+            transition: background 0.2s, box-shadow 0.2s, color 0.2s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .back-button:hover {
+            background: linear-gradient(135deg, #5a6fd8, var(--primary-color));
+            color: #fffbe7;
+            transform: translateY(-2px) scale(1.08);
+            box-shadow: 0 8px 25px rgba(76, 132, 255, 0.25);
+        }
     </style>
 @endsection
 
@@ -434,15 +459,15 @@
 
         // Navigation functions
         function goBack() {
-            window.location.href = 'rides.html';
+            window.location.href = 'rides';
         }
 
         function goToDashboard() {
-            window.location.href = 'passenger-dashboard.html';
+            window.location.href = 'passenger-dashboard';
         }
 
         function viewBooking() {
-            window.location.href = 'booking-history.html';
+            window.location.href = 'booking-history';
         }
     </script>
 
