@@ -375,12 +375,12 @@
                 // Redirect to appropriate dashboard
                 redirectToDashboard(role) {
                     const dashboards = {
-                        passenger: "passenger-dashboard.html",
-                        driver: "driver-dashboard.html",
-                        admin: "admin-dashboard.html",
+                        passenger: "/", // Laravel home route
+                        driver: "/",    // Laravel home route
+                        admin: "/admin-dashboard", // Update as needed
                     };
 
-                    window.location.href = dashboards[role] || "index.html";
+                    window.location.href = dashboards[role] || "/";
                 }
 
                 // Get current session

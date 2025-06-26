@@ -568,11 +568,15 @@
                 if (selectedRole === 'driver') {
                     showAlert('Registration submitted! Your account will be activated after document verification.', 'success');
                     setTimeout(() => {
+                        // Remove any session before redirecting
+                        localStorage.removeItem('hubber_session');
                         window.location.href = '/login';
                     }, 3000);
                 } else {
                     showAlert('Registration successful! You can now log in.', 'success');
                     setTimeout(() => {
+                        // Remove any session before redirecting
+                        localStorage.removeItem('hubber_session');
                         window.location.href = '/login';
                     }, 2000);
                 }
