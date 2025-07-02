@@ -34,7 +34,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle login request
+     * Handle login request 
      */
     public function login(Request $request)
     {
@@ -58,7 +58,6 @@ class AuthController extends Controller
 
             if ($response->successful()) {
                 $data = $response->json();
-                
                 // Store user data and token in session
                 Session::put('user', $data['user']);
                 Session::put('token', $data['token']);
