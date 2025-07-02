@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 // Main pages
 //http://127.0.0.1:8000/
@@ -8,50 +9,57 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
-// Authentication routes
+// Authentication routes (public)
 //http://127.0.0.1:8000/login
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
 //http://127.0.0.1:8000/register
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 
-// User related routes
-//http://127.0.0.1:8000/profile
-Route::get('/profile', function () {
-    return view('user-profile');
-})->name('user.profile');
+// Forgot password
+Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
 
-//http://127.0.0.1:8000/driver-profile
-Route::get('/driver-profile', function () {
-    return view('driver-profile');
-})->name('driver.profile');
+// Protected routes (require authentication)
+Route::middleware(['auth'])->group(function () {
+    // Logout route
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Booking and ride related routes
-//http://127.0.0.1:8000/bookings
-Route::get('/bookings', function () {
-    return view('user-bookings');
-})->name('user.bookings');
+    // User related routes
+    //http://127.0.0.1:8000/profile
+    Route::get('/profile', function () {
+        return view('user-profile');
+    })->name('user.profile');
 
-//http://127.0.0.1:8000/history
-Route::get('/history', function () {
-    return view('user-history');
-})->name('user.history');
+    //http://127.0.0.1:8000/driver-profile
+    Route::get('/driver-profile', function () {
+        return view('driver-profile');
+    })->name('driver.profile');
 
-//http://127.0.0.1:8000/rides
-Route::get('/rides', function () {
-    return view('rides');
-})->name('rides');
+    // Booking and ride related routes
+    //http://127.0.0.1:8000/bookings
+    Route::get('/bookings', function () {
+        return view('user-bookings');
+    })->name('user.bookings');
 
-//http://127.0.0.1:8000/seat-selection
-Route::get('/seat-selection', function () {
-    return view('seat-selection');
-})->name('seat.selection');
+    //http://127.0.0.1:8000/history
+    Route::get('/history', function () {
+        return view('user-history');
+    })->name('user.history');
 
-//http://127.0.0.1:8000/payment
-Route::get('/payment', function () {
-    return view('payment');
-})->name('payment');
+    //http://127.0.0.1:8000/rides
+    Route::get('/rides', function () {
+        return view('rides');
+    })->name('rides');
+
+    //http://127.0.0.1:8000/seat-selection
+    Route::get('/seat-selection', function () {
+        return view('seat-selection');
+    })->name('seat.selection');
+
+    //http://127.0.0.1:8000/payment
+    Route::get('/payment', function () {
+        return view('payment');
+    })->name('payment');
+});
