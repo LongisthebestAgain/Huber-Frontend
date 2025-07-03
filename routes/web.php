@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 // Main pages
 //http://127.0.0.1:8000/
@@ -28,9 +29,10 @@ Route::middleware(['auth'])->group(function () {
 
     // User related routes
     //http://127.0.0.1:8000/profile
-    Route::get('/profile', function () {
-        return view('user-profile');
-    })->name('user.profile');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
+    Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('user.profile.update');
+    Route::post('/profile/preferences', [ProfileController::class, 'updatePreferences'])->name('user.profile.preferences');
+    Route::post('/profile/emergency-contact', [ProfileController::class, 'updateEmergencyContact'])->name('user.profile.emergency');
 
     //http://127.0.0.1:8000/driver-profile
     Route::get('/driver-profile', function () {

@@ -206,6 +206,9 @@
     </style>
 @endsection
 @section('content')
+@php
+    $username = $profile['username'] ?? (isset($profile['email']) ? strstr($profile['email'], '@', true) : 'user');
+@endphp
     <div class="profile-container">
         <a href="{{ route('home') }}" class="back-button">
             <i class="fas fa-arrow-left"></i>
@@ -224,52 +227,59 @@
                     <div class="main-card">
                         <!-- Profile Photo Section -->
                         <div class="text-center mb-4">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuNhTZJTtkR6b-ADMhmzPvVwaLuLdz273wvQ&s"
+                            <img src="{{ $profile['profile_photo_url'] ?? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuNhTZJTtkR6b-ADMhmzPvVwaLuLdz273wvQ&s' }}"
                                 alt="Profile Photo" class="profile-avatar mb-3" />
                             <div>
-                                <button class="btn btn-outline-secondary me-2">
-                                    <i class="fas fa-camera me-2"></i>Change
-                                    Photo
-                                </button>
-                                <button class="btn btn-outline-danger">
-                                    <i class="fas fa-trash me-2"></i>Remove
-                                </button>
+                                <form action="#" method="POST" enctype="multipart/form-data" style="display:inline-block;">
+                                    @csrf
+                                    <label class="btn btn-outline-secondary me-2" style="margin-bottom:0;">
+                                        <i class="fas fa-camera me-2"></i>Change Photo
+                                        <input type="file" name="photo" style="display:none;" onchange="this.form.submit()" />
+                                    </label>
+                                </form>
+                                <form action="#" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-danger">
+                                        <i class="fas fa-trash me-2"></i>Remove
+                                    </button>
+                                </form>
                             </div>
                             <h4 class="mt-3 mb-1" style="color: var(--dark-color)">
-                                Sarah Johnson
+                                {{ $profile['first_name'] ?? '' }} {{ $profile['last_name'] ?? '' }}
                             </h4>
                             <p class="text-muted mb-3">
-                                @sarahj • Member since 2024
+                                @{{ $username }} • Member since {{ isset($profile['member_since']) ? \Carbon\Carbon::parse($profile['member_since'])->format('Y') : '' }}
                             </p>
                         </div>
 
                         <!-- Personal Information -->
                         <div class="section-card">
                             <h5 class="mb-4">📝 Personal Information</h5>
-                            <form class="row g-3" onsubmit="updateProfile(event)">
+                            <form class="row g-3" method="POST" action="{{ route('user.profile.update') }}">
+                                @csrf
                                 <div class="col-md-6">
                                     <label class="form-label">First Name</label>
-                                    <input type="text" class="form-control" value="Sarah" required />
+                                    <input type="text" name="first_name" class="form-control" value="{{ $profile['first_name'] ?? '' }}" required />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" value="Johnson" required />
+                                    <input type="text" name="last_name" class="form-control" value="{{ $profile['last_name'] ?? '' }}" required />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" value="sarah.johnson@email.com" required />
+                                    <input type="email" name="email" class="form-control" value="{{ $profile['email'] ?? '' }}" required />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" value="+1 (555) 123-4567" required />
+                                    <input type="tel" name="phone_number" class="form-control" value="{{ $profile['phone_number'] ?? '' }}" required />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Date of Birth</label>
-                                    <input type="date" class="form-control" value="1990-05-15" />
+                                    <input type="date" name="date_of_birth" class="form-control" value="{{ $profile['date_of_birth'] ?? '' }}" />
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Address</label>
-                                    <input type="text" class="form-control" value="123 Main Street, City, State 12345" />
+                                    <input type="text" name="address" class="form-control" value="{{ $profile['address'] ?? '' }}" />
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">
@@ -282,57 +292,50 @@
                         <!-- Preferences -->
                         <div class="section-card">
                             <h5 class="mb-4">⚙️ Preferences</h5>
-                            <form class="row g-3" onsubmit="updatePreferences(event)">
+                            <form class="row g-3" method="POST" action="{{ route('user.profile.preferences') }}">
+                                @csrf
                                 <div class="col-md-6">
                                     <label class="form-label">Preferred Language</label>
-                                    <select class="form-select">
-                                        <option value="en" selected>
-                                            English
-                                        </option>
-                                        <option value="es">Spanish</option>
-                                        <option value="fr">French</option>
-                                        <option value="de">German</option>
+                                    <select class="form-select" name="preferred_language">
+                                        <option value="en" {{ ($preferences['preferred_language'] ?? '') == 'en' ? 'selected' : '' }}>English</option>
+                                        <option value="es" {{ ($preferences['preferred_language'] ?? '') == 'es' ? 'selected' : '' }}>Spanish</option>
+                                        <option value="fr" {{ ($preferences['preferred_language'] ?? '') == 'fr' ? 'selected' : '' }}>French</option>
+                                        <option value="de" {{ ($preferences['preferred_language'] ?? '') == 'de' ? 'selected' : '' }}>German</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Currency</label>
-                                    <select class="form-select">
-                                        <option value="usd" selected>
-                                            USD ($)
-                                        </option>
-                                        <option value="eur">EUR (€)</option>
-                                        <option value="gbp">GBP (£)</option>
-                                        <option value="cad">CAD ($)</option>
+                                    <select class="form-select" name="currency">
+                                        <option value="usd" {{ ($preferences['currency'] ?? '') == 'usd' ? 'selected' : '' }}>USD ($)</option>
+                                        <option value="eur" {{ ($preferences['currency'] ?? '') == 'eur' ? 'selected' : '' }}>EUR (€)</option>
+                                        <option value="gbp" {{ ($preferences['currency'] ?? '') == 'gbp' ? 'selected' : '' }}>GBP (£)</option>
+                                        <option value="cad" {{ ($preferences['currency'] ?? '') == 'cad' ? 'selected' : '' }}>CAD ($)</option>
                                     </select>
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Notification Preferences</label>
                                     <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="emailNotif" checked />
+                                        <input class="form-check-input" type="checkbox" name="notification_preferences[email_notifications]" id="emailNotif" {{ ($preferences['notification_preferences']['email_notifications'] ?? false) ? 'checked' : '' }} />
                                         <label class="form-check-label" for="emailNotif">
-                                            📧 Email notifications for
-                                            bookings
+                                            📧 Email notifications for bookings
                                         </label>
                                     </div>
                                     <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="smsNotif" checked />
+                                        <input class="form-check-input" type="checkbox" name="notification_preferences[sms_notifications]" id="smsNotif" {{ ($preferences['notification_preferences']['sms_notifications'] ?? false) ? 'checked' : '' }} />
                                         <label class="form-check-label" for="smsNotif">
-                                            📱 SMS notifications for ride
-                                            updates
+                                            📱 SMS notifications for ride updates
                                         </label>
                                     </div>
                                     <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" id="promoNotif" />
+                                        <input class="form-check-input" type="checkbox" name="notification_preferences[promotional_emails]" id="promoNotif" {{ ($preferences['notification_preferences']['promotional_emails'] ?? false) ? 'checked' : '' }} />
                                         <label class="form-check-label" for="promoNotif">
-                                            🎉 Promotional offers and
-                                            discounts
+                                            🎉 Promotional offers and discounts
                                         </label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save me-2"></i>Save
-                                        Preferences
+                                        <i class="fas fa-save me-2"></i>Save Preferences
                                     </button>
                                 </div>
                             </form>
@@ -341,35 +344,26 @@
                         <!-- Emergency Contact -->
                         <div class="section-card">
                             <h5 class="mb-4">🚨 Emergency Contact</h5>
-                            <form class="row g-3" onsubmit="updateEmergencyContact(event)">
+                            <form class="row g-3" method="POST" action="{{ route('user.profile.emergency') }}">
+                                @csrf
                                 <div class="col-md-6">
                                     <label class="form-label">Contact Name</label>
-                                    <input type="text" class="form-control" value="John Johnson" required />
+                                    <input type="text" name="name" class="form-control" value="{{ $emergencyContact['name'] ?? '' }}" required />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-label">Relationship</label>
-                                    <select class="form-select" required>
-                                        <option value="">
-                                            Select relationship
-                                        </option>
-                                        <option value="spouse" selected>
-                                            Spouse
-                                        </option>
-                                        <option value="parent">
-                                            Parent
-                                        </option>
-                                        <option value="sibling">
-                                            Sibling
-                                        </option>
-                                        <option value="friend">
-                                            Friend
-                                        </option>
-                                        <option value="other">Other</option>
+                                    <select class="form-select" name="relationship" required>
+                                        <option value="">Select relationship</option>
+                                        <option value="spouse" {{ ($emergencyContact['relationship'] ?? '') == 'spouse' ? 'selected' : '' }}>Spouse</option>
+                                        <option value="parent" {{ ($emergencyContact['relationship'] ?? '') == 'parent' ? 'selected' : '' }}>Parent</option>
+                                        <option value="sibling" {{ ($emergencyContact['relationship'] ?? '') == 'sibling' ? 'selected' : '' }}>Sibling</option>
+                                        <option value="friend" {{ ($emergencyContact['relationship'] ?? '') == 'friend' ? 'selected' : '' }}>Friend</option>
+                                        <option value="other" {{ ($emergencyContact['relationship'] ?? '') == 'other' ? 'selected' : '' }}>Other</option>
                                     </select>
                                 </div>
                                 <div class="col-12">
                                     <label class="form-label">Emergency Phone Number</label>
-                                    <input type="tel" class="form-control" value="+1 (555) 987-6543" required />
+                                    <input type="tel" name="phone_number" class="form-control" value="{{ $emergencyContact['phone_number'] ?? '' }}" required />
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary">
@@ -384,15 +378,13 @@
                             <h5 class="mb-4">🔐 Account Security</h5>
                             <div class="d-grid gap-2 d-md-flex">
                                 <button class="btn btn-outline-primary me-md-2" onclick="changePassword()">
-                                    <i class="fas fa-key me-2"></i>Change
-                                    Password
+                                    <i class="fas fa-key me-2"></i>Change Password
                                 </button>
                                 <button class="btn btn-outline-warning me-md-2" onclick="downloadData()">
                                     <i class="fas fa-download me-2"></i>Download My Data
                                 </button>
                                 <button class="btn btn-outline-danger" onclick="deleteAccount()">
-                                    <i class="fas fa-trash me-2"></i>Delete
-                                    Account
+                                    <i class="fas fa-trash me-2"></i>Delete Account
                                 </button>
                             </div>
                         </div>
